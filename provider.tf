@@ -10,10 +10,10 @@ terraform {
     }
   }
 
-#  backend "gcs" {
-#    bucket = ""
-#    prefix = ""
-#  }
+  #  backend "gcs" {
+  #    bucket = ""
+  #    prefix = ""
+  #  }
 }
 
 provider "google" {
