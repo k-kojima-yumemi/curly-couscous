@@ -1,0 +1,112 @@
+module.github_secrets["k-kojima-yumemi/curly-couscous"].data.github_repository.repo: Reading...
+module.github_secrets["k-kojima-yumemi/curly-couscous"].data.github_repository.repo: Read complete after 0s [id=curly-couscous]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.github_secrets["k-kojima-yumemi/curly-couscous"].github_actions_secret.identity_provider will be created
+  + resource "github_actions_secret" "identity_provider" {
+      + created_at      = (known after apply)
+      + id              = (known after apply)
+      + plaintext_value = (sensitive value)
+      + repository      = "curly-couscous"
+      + secret_name     = "GCP_IDENTITY_PROVIDER"
+      + updated_at      = (known after apply)
+    }
+
+  # module.github_secrets["k-kojima-yumemi/curly-couscous"].github_actions_secret.service_account will be created
+  + resource "github_actions_secret" "service_account" {
+      + created_at      = (known after apply)
+      + id              = (known after apply)
+      + plaintext_value = (sensitive value)
+      + repository      = "curly-couscous"
+      + secret_name     = "GCP_SERVICE_ACCOUNT"
+      + updated_at      = (known after apply)
+    }
+
+  # module.main_github_identity_pool.google_iam_workload_identity_pool.pool will be created
+  + resource "google_iam_workload_identity_pool" "pool" {
+      + description               = "OpenID Connection"
+      + display_name              = "github-actions-openid-koma"
+      + id                        = (known after apply)
+      + name                      = (known after apply)
+      + project                   = (known after apply)
+      + state                     = (known after apply)
+      + workload_identity_pool_id = "github-actions-openid-koma"
+
+      + timeouts {}
+    }
+
+  # module.main_github_identity_pool.google_iam_workload_identity_pool_provider.gh_provider will be created
+  + resource "google_iam_workload_identity_pool_provider" "gh_provider" {
+      + attribute_condition                = "attribute.actor == 'k-kojima-yumemi'"
+      + attribute_mapping                  = {
+          + "attribute.actor"      = "assertion.actor"
+          + "attribute.repository" = "assertion.repository"
+          + "google.subject"       = "assertion.sub"
+        }
+      + disabled                           = false
+      + display_name                       = "GitHub Identity Provider"
+      + id                                 = (known after apply)
+      + name                               = (known after apply)
+      + project                            = (known after apply)
+      + state                              = (known after apply)
+      + workload_identity_pool_id          = "github-actions-openid-koma"
+      + workload_identity_pool_provider_id = "token-actions-githubusercontent"
+
+      + oidc {
+          + allowed_audiences = []
+          + issuer_uri        = "https://token.actions.githubusercontent.com"
+        }
+
+      + timeouts {}
+    }
+
+  # module.main_service_account_github.data.google_iam_policy.policy will be read during apply
+  # (config refers to values not yet known)
+ <= data "google_iam_policy" "policy" {
+      + id          = (known after apply)
+      + policy_data = (known after apply)
+
+      + binding {
+          + members = [
+              + (known after apply),
+            ]
+          + role    = "roles/iam.workloadIdentityUser"
+        }
+    }
+
+  # module.main_service_account_github.google_service_account.account will be created
+  + resource "google_service_account" "account" {
+      + account_id   = "github-actions-koma"
+      + description  = "Access from GitHub Actions(k-kojima-yumemi)"
+      + disabled     = false
+      + display_name = "GitHub Actions koma"
+      + email        = (known after apply)
+      + id           = (known after apply)
+      + member       = (known after apply)
+      + name         = (known after apply)
+      + project      = (known after apply)
+      + unique_id    = (known after apply)
+
+      + timeouts {}
+    }
+
+  # module.main_service_account_github.google_service_account_iam_policy.policy will be created
+  + resource "google_service_account_iam_policy" "policy" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + policy_data        = (known after apply)
+      + service_account_id = (known after apply)
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
