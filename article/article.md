@@ -1,7 +1,7 @@
 # GCPでGitHub Actions用(OIDC)のサービスアカウントをTerraformで作成する
 
 本記事ではGoogle Cloud Platform上でGitHub ActionsからOIDCで接続できるサービスアカウントをTerraformで作成します。
-ついでに、作成した情報をGitHub Actionsのシークレットに登録するところまでTerraformでやります。
+ついでに、作成した情報をGitHub ActionsのSecretsに登録するところまでTerraformでやります。
 
 ## 参考
 
@@ -37,11 +37,11 @@ https://github.com/k-kojima-yumemi/curly-couscous
 GitHubのリポジトリは既存のものを使用します。
 Secretsはリポジトリに直接紐付けます。
 Secretsに接続に使用するサービスアカウントの情報とidentity providerの情報を登録します。
-リポジトリに登録するため、GCP側でもリポジトリのみで認証をするように設定します。
+リポジトリに登録するため、GCP側でもリポジトリのみで認証をするように設定します。(Environmentsは設定しません)
 
 サービスアカウントにはGitHubのリポジトリから使用できるようにWorkload Identityユーザーの権限を登録するところまでやります。
 
-複数のGitHubリポジトリで同じアカウントを使い回すような設計にしていますのでご了承下さい。
+複数のGitHubリポジトリで同じサービスアカウントを使い回すような設計にしていますのでご了承下さい。1つのリポジトリに1つのサービスアカウントにする場合はサービスアカウントを作成するmoduleをfor_eachで繰り返し適用することになるのかなと思います。
 
 ### 使用するプロバイダー
 
@@ -61,10 +61,10 @@ terraform {
 ```
 
 GCPを操作するのでgoogleのプロバイダー、GitHubのリソース作成のためにgithubのProviderを使用します。
-GitHubのプロバイダーはdeprecatedになった昔のものを使用しないようにしましょう。
+GitHubのプロバイダーはdeprecatedになった昔のものを使用しないようにして下さい。
 GitHubのリソースを作成するmoduleの中ではterraformブロックを定義して確実に`integrations/github`のモジュールを使わせるようにし、deprecatedになったプロバイダーが混ざることのないようにして下さい。
 
-各Providerの設定は以下のようにしました
+各Providerの設定は以下のようにしました。
 ```terraform
 provider "google" {
   project = var.project_name
@@ -77,12 +77,12 @@ provider "github" {
   owner = var.github_owner
 }
 ```
-GCPのプロバイダーにはとりあえずregionやzoneを登録していますが今回作成するリソースには使われていません。
+GCPのプロバイダーにはとりあえずregionやzoneを登録していますが、今回作成するリソースには使われていません。
 projectには操作するプロジェクトの名前を入れています。(IDの番号ではないです)
 GitHubのtokenには `gh auth token` で得られるものを使用しています。
 ownerにはリポジトリの所有者を入れています。
 
-### GCPのWorkload Identity 連携の作成
+### GCPのWorkload Identity連携の作成
 
 まずはGitHub Actionsから接続するためのOIDCの設定から作成します。
 
@@ -169,10 +169,13 @@ data "google_iam_policy" "policy" {
 
 サービスアカウントのEmailはGitHub ActionsのSecretsに登録するのでoutputに入れています。
 
+実際にCloud StorageにアクセスしたりSecret Managerから読み出したりするときにはこのアカウントに対して権限の設定を行います。
+
 ### GitHub ActionsのSecretsの作成
 
 ここではdeprecatedになったプロバイダーを使用しないように気をつけて下さい。
-また、github_repositoryはリポジトリが見つからない時nameにnullを入れてくるので、planした際にはよく確認するといいと思います。
+また、github_repositoryはリポジトリが見つからない時nameに`null`を入れてくるので、planした際にはよく確認するといいと思います。
+github_actions_secretの`repository`に`null`が入っているとplanが通らないので気づけますが...
 
 ```terraform
 data "github_repository" "repo" {
@@ -199,7 +202,7 @@ resource "github_actions_secret" "service_account" {
 
 ## Plan
 
-ここまでの内容で作成したTerraformでterraform planを実行した例を紹介します。
+ここまでの内容で作成したTerraformで`terraform plan`を実行した例を紹介します。
 検証に使用したGitHubのリポジトリを対象に実行しています。
 
 ```
@@ -313,9 +316,10 @@ Plan: 6 to add, 0 to change, 0 to destroy.
 ```
 
 Applyするとリソースが作成されます。
-![a.png](a.png)
-実験的に、7つのリポジトリに対してPolicyを設定しています。
-![b.png](b.png)
+![a.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3355242/59a01a6f-a30e-8cbe-2509-8b81a3ee3634.png)
+
+実験的に、7つのリポジトリに対してPolicyを設定すると以下のようにroles/iam.workloadIdentityUser(Workload Identity ユーザー)が設定されたprincipalが7つ作成されます。
+![b.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3355242/841c12f9-f2de-98e8-7c00-2a19b7b37993.png)
 
 ## GitHub Actionsの実行
 
@@ -345,5 +349,5 @@ jobs:
 ```
 
 checkoutしてからGCPの認証をするだけのWorkflowです。
-![c.png](c.png)
+![c.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3355242/28f35319-25cd-9c83-7344-b08a2d3b1f0c.png)
 このように正常に動作することが確認できます。
