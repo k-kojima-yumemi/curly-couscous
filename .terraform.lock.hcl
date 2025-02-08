@@ -1,6 +1,29 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/hashicorp/aws" {
+  version     = "5.86.0"
+  constraints = "~> 5.0"
+  hashes = [
+    "h1:UpRjlmF+Xi6q4YxMMlN/66sCI81VWJOKiumk1cfBptQ=",
+    "zh:1587c6a0199dc33d066c13e1628bc0dd966d7d6740cb2007b636524a3ec99430",
+    "zh:15af46cc5bb43a37c24438cb3a36d44209a89d923ea4d4d631b56b1a89717b26",
+    "zh:166902101ac1cc8ec4f53e3bdcbab2eac7eb448b1c428c2e622adbf9ce1a679c",
+    "zh:284d116ac9d4a4de74cd1f52486f00e10bc400d9654f92a8990ea0093c43ff78",
+    "zh:4135e928f20d456172c8ab4ae3d4d8e411b6feddc94aaa1347c92469d52f1e61",
+    "zh:72b317d17182c3e0ee72f2851d25565d369cb6ee803b12adc9b6c6d3dbfca8d7",
+    "zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425",
+    "zh:9dd0e80964e215ff658b708be72ccda8a20f63af7eaebdd6f11eb0461633bb03",
+    "zh:a18e502c16b7b6b216b888eab9a5c66b1ed103847fce6985850e4fc9e364a3e8",
+    "zh:c239f12648d7f7bbadbf5db0b57aaa9429abe70b574975b581784b4f17b7ed79",
+    "zh:c5164ca8254b9973ee985a3841a4b1f776844c7dcbc112ab3a88a0096e7e2198",
+    "zh:d93ac58092c3fffc5ddc688b39721fbfacc353e8965001060a5a1ce934d97246",
+    "zh:e877f1be2ebe67a2d163b7488f47cff4c95aca9c541ddfa25ad16c6ecc98f6a8",
+    "zh:eb71af6dfdd2b5670b5b957397a576d6053587c75750c17acc105fb44ed806eb",
+    "zh:ff6aa4f88f8e789375391bc8c886c636fb3e4a45a3fd7dc291bca17c2b8d4184",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/google" {
   version     = "6.19.0"
   constraints = "~> 6.0"
@@ -22,23 +45,24 @@ provider "registry.terraform.io/hashicorp/google" {
 }
 
 provider "registry.terraform.io/integrations/github" {
-  version     = "5.45.0"
-  constraints = "~> 5.0"
+  version     = "6.5.0"
+  constraints = "~> 6.0"
   hashes = [
-    "h1:sP/Er9osOsz4vhKZAul+GeV0c5XdvMblJBMiP+T5tWc=",
-    "zh:2afb8ee5b847071e51d5a39bcad5cf466c4d22452450d37c44a5f9d2eb9879e5",
-    "zh:38d087b88c86ddd63b60d14d613f86a5885d154048098c0484266a9a69018b16",
-    "zh:3e6a787e3e40f1535d85f8dc5f2e8c90242ab8237feebd027f696fa154261394",
-    "zh:55dac5a813b3774b48ca45b8a797c32e6d787d4f282b43b622155cad3daac46a",
-    "zh:563f2782f3c4c584b249c5fa0628951a57b4593f3c5805a4efb6d494f8686716",
-    "zh:677180ec9376d5f926286592998e2864c85f06d6b416c1d89031d817a285c72e",
-    "zh:80eec141fa47131e8f60a6478e51b3a5920efe803444e684f9605fca09a24e34",
-    "zh:8b9f1e1f4b42b51e53767f4f927eabdcefe55fb0369e996ac2a0063148b5e48d",
-    "zh:95627f75848561830f8c20949f024f902a2100a022c68aa8d84320f43e75cc46",
-    "zh:95ac41b99dfca3ce556092e036bb04dc03367d0779071112e59d4bf11259a89d",
-    "zh:9e966482729ba8214b480bdd786aff9a15234e9c093c5406b56ce89ccb07dcab",
-    "zh:b7a9d563613f1b9a233f8f285848cc9d8c08c556aad7ea57cd63e0abb19b10cf",
-    "zh:ce56bb7ca876f47f5beee01de3ab84d27964b972c9adceb8e2f7824891e05c27",
-    "zh:f73e063ad5b84f1943eafb8a52a26dd805d06ac11d6c951175ac76c07187f553",
+    "h1:rMuaCjyJo4zR9CKZoB1kCpZ9pZke4rlfd+ea0vCpaVg=",
+    "zh:3088bfd30c51ebfcb7c8d829465ec7b3c19af684cf1aff1ea1111ad3c6421c11",
+    "zh:34f9054b0123f9fa7ab8ebc73591d2cf502f1cc75e7594bde42ce799fcac32b6",
+    "zh:406dc2e63d43a24ac4f1b004e5c60ada3347207ea750bbd51e6199eb7f044f9f",
+    "zh:43e7b6cb7e5062d9b7b7cf4d23f6ea99fb9605fb014fede62cda307051063c05",
+    "zh:6a0923ebcc09cb98c488c11582375d2145ba965d1e6f2f69c077be8e1224020b",
+    "zh:a2331f06b7ed57e83eadb784211067d675826f67cf0ed051c8ab20335d83de9a",
+    "zh:a3f82213c98319f20438bdb92145ce1b0407cd8b8eec9745c036db10deb3d3a2",
+    "zh:b4b8db8537d8e6fb3f05ed875726823e1dc6925c479db8749016e71568ebafc4",
+    "zh:cdcf76f6f6f5c638db540490ab35bb1aacfc27204f1197004da5e950024afc06",
+    "zh:de36cea60efe2b74cec958f88ec5c39d467ad9443c9c9e311424c3db229c4e78",
+    "zh:dfb8949edc6722da66c78a19ccb1b81ac855439a28ca3badfdac5c10bbf2190d",
+    "zh:e1a81734cc81f4f51dd11ca8a62b420f68e72d00835ed54f84d71bd56d19f37f",
+    "zh:ec0d51640c3e3cf933c73d0ed79ba8b395d1b94fed8117a6438dba872aa5561f",
+    "zh:ec59b7c420a2358e9750e9c6a8a5ef26ccbb8a2cae417e115e86d63520759ea5",
+    "zh:fbd1fee2c9df3aa19cf8851ce134dea6e45ea01cb85695c1726670c285797e25",
   ]
 }

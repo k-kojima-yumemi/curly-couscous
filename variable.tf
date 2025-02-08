@@ -34,3 +34,12 @@ variable "github_repositories" {
     "k-kojima-yumemi/curly-couscous",
   ]
 }
+
+variable "aws_region" {
+  type = string
+}
+
+variable "aws_profile" {
+  type    = string
+  default = ""
+}
