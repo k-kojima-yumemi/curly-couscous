@@ -1,20 +1,11 @@
 variable "project_name" {
-  type    = string
-  default = ""
+  type        = string
+  description = "The project name for Google Cloud Project"
 }
 
 variable "project_region" {
-  type    = string
-  default = ""
-}
-
-variable "project_zone" {
-  type    = string
-  default = ""
-}
-
-variable "gh_token" {
-  type = string
+  type        = string
+  description = "Main region for this infrastructure"
 }
 
 variable "identity_pool_id" {

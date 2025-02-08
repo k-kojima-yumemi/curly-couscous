@@ -2,7 +2,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4"
+      version = "~> 6.0"
     }
     github = {
       source  = "integrations/github"
@@ -10,19 +10,17 @@ terraform {
     }
   }
 
-  #  backend "gcs" {
-  #    bucket = ""
-  #    prefix = ""
-  #  }
+  backend "gcs" {
+    // defined in local configuration file
+  }
 }
 
 provider "google" {
   project = var.project_name
   region  = var.project_region
-  zone    = var.project_zone
 }
 
 provider "github" {
-  token = var.gh_token
   owner = var.github_owner
+  // Using token from gh command
 }
