@@ -17,3 +17,11 @@ variable "service_account_email" {
     error_message = "service_account_email must not be empty"
   }
 }
+
+variable "aws_iam_role_arn" {
+  type = string
+  validation {
+    condition     = var.aws_iam_role_arn != ""
+    error_message = "aws_iam_role_arn must not be empty"
+  }
+}

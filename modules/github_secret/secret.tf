@@ -27,3 +27,9 @@ resource "github_actions_secret" "service_account" {
   secret_name     = "GCP_SERVICE_ACCOUNT"
   plaintext_value = var.service_account_email
 }
+
+resource "github_actions_secret" "iam_arn" {
+  repository      = data.github_repository.repo.name
+  secret_name     = "AWS_IAM_ROLE"
+  plaintext_value = var.service_account_email
+}

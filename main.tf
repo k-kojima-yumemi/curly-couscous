@@ -19,4 +19,5 @@ module "github_secrets" {
   repo_full_name                       = each.value
   service_account_email                = module.main_service_account_github.service_account_email
   workload_identity_pool_provider_name = module.main_github_identity_pool.workload_identity_pool_provider_name
+  aws_iam_role_arn                     = module.main_service_account_github.aws_iam_role_arn
 }

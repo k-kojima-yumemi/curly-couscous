@@ -17,5 +17,14 @@ data "aws_iam_policy_document" "account_assume" {
       variable = "accounts.google.com:aud"
       values   = [google_service_account.account.unique_id]
     }
+    condition {
+      test     = "StringEquals"
+      variable = "accounts.google.com:sub"
+      values   = [google_service_account.account.unique_id]
+    }
   }
+}
+
+output "aws_iam_role_arn" {
+  value = aws_iam_role.account.arn
 }
